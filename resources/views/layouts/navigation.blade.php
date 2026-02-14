@@ -20,6 +20,9 @@
                         <x-nav-link :href="route('exams.index')" :active="request()->routeIs('exams.*')">
                             {{ __('Exams') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('norms.index')" :active="request()->routeIs('norms.*')">
+                            {{ __('Norms') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('results.index')" :active="request()->routeIs('results.*')">
                             {{ __('Results') }}
                         </x-nav-link>

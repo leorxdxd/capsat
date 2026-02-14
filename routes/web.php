@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\CounselorController;
+use App\Http\Controllers\NormTableController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,6 +28,11 @@ Route::middleware(['auth', 'role:psychometrician'])->group(function () {
     Route::get('/results/{result}', [ResultController::class, 'show'])->name('results.show');
     Route::post('/results/{result}/send-to-counselor', [ResultController::class, 'sendToCounselor'])->name('results.sendToCounselor');
     Route::post('/results/{result}/final-sign', [ResultController::class, 'finalSign'])->name('results.finalSign');
+    
+    // Norm Table Management
+    Route::resource('norms', NormTableController::class);
+    Route::post('/norms/{norm}/ranges', [NormTableController::class, 'addRange'])->name('norms.addRange');
+    Route::delete('/norms/{norm}/ranges/{range}', [NormTableController::class, 'deleteRange'])->name('norms.deleteRange');
 });
 
 Route::middleware(['auth', 'role:counselor'])->group(function () {
