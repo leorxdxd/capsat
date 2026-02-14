@@ -6,6 +6,7 @@ use App\Models\ExamResult;
 use App\Models\ExamAttempt;
 use App\Services\ResultService;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ResultController extends Controller
 {
@@ -55,6 +56,37 @@ class ResultController extends Controller
             ->with('success', 'Result sent to counselor for review.');
     }
     
+    /**
+     * View PDF preview
+     */
+    public function viewPdf(ExamResult $result)
+    {
+        if (!$result->canBePrinted()) {
+            return back()->with('error', 'Result must have both signatures before printing.');
+        }
+
+        $result->load(['student', 'exam', 'signatures.user']);
+        $pdf = Pdf::loadView('reports.result-pdf', compact('result'));
+        
+        return $pdf->stream('result-' . $result->id . '.pdf');
+    }
+
+    /**
+     * Download PDF
+     */
+    public function downloadPdf(ExamResult $result)
+    {
+        if (!$result->canBePrinted()) {
+            return back()->with('error', 'Result must have both signatures before printing.');
+        }
+
+        $result->load(['student', 'exam', 'signatures.user']);
+        $pdf = Pdf::loadView('reports.result-pdf', compact('result'));
+        
+        $filename = 'Entrance_Exam_Result_' . $result->student->last_name . '_' . $result->id . '.pdf';
+        return $pdf->download($filename);
+    }
+
     /**
      * Final sign after counselor approval
      */

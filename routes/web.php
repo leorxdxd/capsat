@@ -28,6 +28,8 @@ Route::middleware(['auth', 'role:psychometrician'])->group(function () {
     Route::get('/results/{result}', [ResultController::class, 'show'])->name('results.show');
     Route::post('/results/{result}/send-to-counselor', [ResultController::class, 'sendToCounselor'])->name('results.sendToCounselor');
     Route::post('/results/{result}/final-sign', [ResultController::class, 'finalSign'])->name('results.finalSign');
+    Route::get('/results/{result}/pdf', [ResultController::class, 'viewPdf'])->name('results.pdf');
+    Route::get('/results/{result}/pdf/download', [ResultController::class, 'downloadPdf'])->name('results.pdf.download');
     
     // Norm Table Management
     Route::resource('norms', NormTableController::class);
