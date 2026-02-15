@@ -33,6 +33,12 @@
                             {{ __('Reviews') }}
                         </x-nav-link>
                     @endif
+                    
+                    @if(Auth::user()->hasRole('admin'))
+                        <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                            {{ __('Users') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
