@@ -5,6 +5,7 @@ use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\CounselorController;
 use App\Http\Controllers\NormTableController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -35,6 +36,14 @@ Route::middleware(['auth', 'role:psychometrician'])->group(function () {
     Route::resource('norms', NormTableController::class);
     Route::post('/norms/{norm}/ranges', [NormTableController::class, 'addRange'])->name('norms.addRange');
     Route::delete('/norms/{norm}/ranges/{range}', [NormTableController::class, 'deleteRange'])->name('norms.deleteRange');
+});
+
+// Admin Routes
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    // User Management
+    Route::resource('users', UserController::class);
+    Route::post('users/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.reset-password');
+    Route::post('users/{user}/restore', [UserController::class, 'restore'])->name('users.restore')->withTrashed();
 });
 
 Route::middleware(['auth', 'role:counselor'])->group(function () {
