@@ -38,6 +38,12 @@
                         <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                             {{ __('Users') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.settings.index')" :active="request()->routeIs('admin.settings.*')">
+                            {{ __('Settings') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.audit.index')" :active="request()->routeIs('admin.audit.*')">
+                            {{ __('Audit Logs') }}
+                        </x-nav-link>
                     @endif
                 </div>
             </div>
@@ -98,6 +104,30 @@
             @if(Auth::user()->hasRole('psychometrician'))
                 <x-responsive-nav-link :href="route('exams.index')" :active="request()->routeIs('exams.*')">
                     {{ __('Exams') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('norms.index')" :active="request()->routeIs('norms.*')">
+                    {{ __('Norms') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('results.index')" :active="request()->routeIs('results.*')">
+                    {{ __('Results') }}
+                </x-responsive-nav-link>
+            @endif
+
+            @if(Auth::user()->hasRole('counselor'))
+                <x-responsive-nav-link :href="route('counselor.index')" :active="request()->routeIs('counselor.*')">
+                    {{ __('Reviews') }}
+                </x-responsive-nav-link>
+            @endif
+
+            @if(Auth::user()->hasRole('admin'))
+                <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                    {{ __('Users') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.settings.index')" :active="request()->routeIs('admin.settings.*')">
+                    {{ __('Settings') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.audit.index')" :active="request()->routeIs('admin.audit.*')">
+                    {{ __('Audit Logs') }}
                 </x-responsive-nav-link>
             @endif
         </div>

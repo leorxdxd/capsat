@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AuditLog;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AuditLogController extends Controller
@@ -35,8 +36,8 @@ class AuditLogController extends Controller
 
         $logs = $query->paginate(50);
         
-        // Get unique users for filter
-        $users = \App\Models\User::whereHas('auditLogs')->get();
+        // Get all users for filter dropdown (safe query)
+        $users = User::orderBy('name')->get();
 
         return view('admin.audit.index', compact('logs', 'users'));
     }
