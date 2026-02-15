@@ -120,7 +120,7 @@
         </a>
 
         <!-- Database Backup -->
-        <a href="#" class="group bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 hover:shadow-2xl transition-all hover:-translate-y-1 opacity-60">
+        <a href="{{ route('admin.backup.index') }}" class="group bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 hover:shadow-2xl transition-all hover:-translate-y-1">
             <div class="flex items-center mb-4">
                 <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg p-3 group-hover:scale-110 transition-transform">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -129,12 +129,11 @@
                 </div>
                 <h3 class="ml-4 text-lg font-bold text-gray-900 dark:text-white">Database Backup</h3>
             </div>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">Manage database backups and restoration</p>
-            <span class="mt-2 inline-block text-xs bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300 px-2 py-1 rounded-full">Coming Soon</span>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Create and manage database backups</p>
         </a>
 
         <!-- Reports & Analytics -->
-        <a href="#" class="group bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 hover:shadow-2xl transition-all hover:-translate-y-1 opacity-60">
+        <a href="{{ route('admin.reports.index') }}" class="group bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 hover:shadow-2xl transition-all hover:-translate-y-1">
             <div class="flex items-center mb-4">
                 <div class="bg-gradient-to-br from-pink-500 to-pink-600 rounded-lg p-3 group-hover:scale-110 transition-transform">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -144,7 +143,6 @@
                 <h3 class="ml-4 text-lg font-bold text-gray-900 dark:text-white">Reports & Analytics</h3>
             </div>
             <p class="text-gray-600 dark:text-gray-400 text-sm">View system statistics and generate reports</p>
-            <span class="mt-2 inline-block text-xs bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300 px-2 py-1 rounded-full">Coming Soon</span>
         </a>
 
         <!-- Security Settings -->

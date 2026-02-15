@@ -8,6 +8,8 @@ use App\Http\Controllers\NormTableController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\AuditLogController;
+use App\Http\Controllers\Admin\BackupController;
+use App\Http\Controllers\Admin\ReportsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -54,6 +56,15 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Audit Logs
     Route::get('audit-logs', [AuditLogController::class, 'index'])->name('audit.index');
     Route::get('audit-logs/export', [AuditLogController::class, 'export'])->name('audit.export');
+    
+    // Database Backup
+    Route::get('backups', [BackupController::class, 'index'])->name('backup.index');
+    Route::post('backups', [BackupController::class, 'create'])->name('backup.create');
+    Route::get('backups/{filename}', [BackupController::class, 'download'])->name('backup.download');
+    Route::delete('backups/{filename}', [BackupController::class, 'destroy'])->name('backup.destroy');
+    
+    // Reports & Analytics
+    Route::get('reports', [ReportsController::class, 'index'])->name('reports.index');
 });
 
 Route::middleware(['auth', 'role:counselor'])->group(function () {
