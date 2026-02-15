@@ -93,7 +93,7 @@
         </a>
 
         <!-- System Settings -->
-        <a href="#" class="group bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 hover:shadow-2xl transition-all hover:-translate-y-1">
+        <a href="{{ route('admin.settings.index') }}" class="group bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 hover:shadow-2xl transition-all hover:-translate-y-1">
             <div class="flex items-center mb-4">
                 <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg p-3 group-hover:scale-110 transition-transform">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">

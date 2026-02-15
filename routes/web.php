@@ -6,6 +6,8 @@ use App\Http\Controllers\ResultController;
 use App\Http\Controllers\CounselorController;
 use App\Http\Controllers\NormTableController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\AuditLogController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -44,6 +46,14 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('users', UserController::class);
     Route::post('users/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.reset-password');
     Route::post('users/{user}/restore', [UserController::class, 'restore'])->name('users.restore')->withTrashed();
+    
+    // Settings
+    Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
+    Route::post('settings', [SettingsController::class, 'update'])->name('settings.update');
+    
+    // Audit Logs
+    Route::get('audit-logs', [AuditLogController::class, 'index'])->name('audit.index');
+    Route::get('audit-logs/export', [AuditLogController::class, 'export'])->name('audit.export');
 });
 
 Route::middleware(['auth', 'role:counselor'])->group(function () {

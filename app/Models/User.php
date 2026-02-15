@@ -35,6 +35,11 @@ class User extends Authenticatable
         return $this->hasOne(Student::class);
     }
 
+    public function auditLogs()
+    {
+        return $this->hasMany(AuditLog::class);
+    }
+
     public function hasRole($slug)
     {
         return $this->role && $this->role->slug === $slug;
