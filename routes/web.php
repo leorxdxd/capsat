@@ -14,6 +14,10 @@ use App\Http\Controllers\Admin\BackupController;
 use App\Http\Controllers\Admin\ReportsController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/up', function () {
+    return response()->json(['status' => 'ok']);
+});
+
 Route::get('/', function () {
     return redirect()->route('login');
 });
