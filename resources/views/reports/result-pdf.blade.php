@@ -1,254 +1,368 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Entrance Examination Result</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Psychological Test Profile Sheet</title>
     <style>
+        @page {
+            size: letter;
+            margin: 0.5in;
+        }
         body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            color: #333;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 10pt;
+            line-height: 1.2;
         }
         .header {
             text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #333;
-            padding-bottom: 20px;
-        }
-        .header h1 {
-            margin: 0;
-            font-size: 24px;
-            color: #1a1a1a;
-        }
-        .header h2 {
-            margin: 5px 0 0 0;
-            font-size: 18px;
-            color: #666;
-            font-weight: normal;
-        }
-        .section {
-            margin-bottom: 25px;
-        }
-        .section-title {
-            font-size: 14px;
-            font-weight: bold;
-            color: #1a1a1a;
             margin-bottom: 10px;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 5px;
         }
-        .info-grid {
-            display: table;
-            width: 100%;
-            margin-bottom: 15px;
+        .header img {
+            height: 50px;
+            vertical-align: middle;
+            margin-right: 15px;
         }
-        .info-row {
-            display: table-row;
-        }
-        .info-label {
-            display: table-cell;
-            width: 30%;
-            padding: 5px 0;
-            font-weight: bold;
-            font-size: 12px;
-        }
-        .info-value {
-            display: table-cell;
-            padding: 5px 0;
-            font-size: 12px;
-        }
-        .result-box {
-            background-color: #f5f5f5;
-            border: 2px solid #333;
-            padding: 20px;
+        .header-text {
+            display: inline-block;
+            vertical-align: middle;
             text-align: center;
-            margin: 20px 0;
         }
-        .result-score {
-            font-size: 36px;
+        .school-name {
+            font-size: 12pt;
             font-weight: bold;
-            color: #1a1a1a;
-            margin: 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .result-description {
-            font-size: 18px;
-            color: #666;
-            margin: 5px 0;
+        .document-title {
+            font-size: 11pt;
+            font-weight: bold;
+            font-style: italic;
+            margin-top: 2px;
         }
-        .result-percentile {
-            font-size: 14px;
-            color: #999;
+        .doc-code {
+            font-size: 8pt;
+            margin-bottom: 5px;
+            text-align: right;
         }
-        .notes-box {
-            background-color: #fafafa;
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin: 10px 0;
-            font-size: 12px;
-            line-height: 1.6;
+        .section-header {
+            font-weight: bold;
+            font-style: italic;
+            border-bottom: 1px solid black;
+            margin-bottom: 5px;
+            margin-top: 10px;
+            text-transform: uppercase;
+            font-size: 10pt;
+        }
+        .info-box {
+            border: 1px solid black;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9pt;
+        }
+        .info-table td {
+            padding: 2px 5px;
+            vertical-align: bottom;
+        }
+        .result-table {
+            width: 100%;
+            border: 1px solid black;
+            margin-bottom: 10px;
+        }
+        .result-table th {
+            border: 1px solid black;
+            background-color: #f0f0f0;
+            padding: 3px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 9pt;
+        }
+        .result-table td {
+            border: 1px solid black;
+            padding: 3px;
+            text-align: center;
+            font-size: 9pt;
+        }
+        .recommendation-section {
+            margin-top: 10px;
+            font-size: 10pt;
+        }
+        .checkbox-list {
+            margin-left: 20px;
+            margin-top: 5px;
+        }
+        .checkbox-item {
+            margin-bottom: 3px;
         }
         .signatures {
-            margin-top: 40px;
-            display: table;
+            margin-top: 30px;
             width: 100%;
         }
         .signature-block {
-            display: table-cell;
-            width: 50%;
-            padding: 20px;
             text-align: center;
+            float: left;
+            width: 45%;
         }
         .signature-line {
-            border-top: 1px solid #333;
-            margin-top: 50px;
-            padding-top: 5px;
-            font-size: 11px;
+            border-top: 1px solid black;
+            margin-top: 30px;
+            padding-top: 2px;
         }
-        .signature-name {
+        .signee-name {
             font-weight: bold;
-            font-size: 12px;
+            text-transform: uppercase;
+            font-size: 10pt;
         }
-        .signature-date {
-            font-size: 10px;
-            color: #666;
+        .signee-title {
+            font-style: italic;
+            font-size: 9pt;
         }
-        .footer {
-            margin-top: 40px;
-            text-align: center;
-            font-size: 10px;
-            color: #999;
-            border-top: 1px solid #ddd;
-            padding-top: 10px;
+        .clear {
+            clear: both;
         }
     </style>
 </head>
 <body>
+
     <div class="header">
-        <h1>SISC Basic Education</h1>
-        <h2>Entrance Examination Result</h2>
-    </div>
-
-    <!-- Student Information -->
-    <div class="section">
-        <div class="section-title">STUDENT INFORMATION</div>
-        <div class="info-grid">
-            <div class="info-row">
-                <div class="info-label">Name:</div>
-                <div class="info-value">{{ $result->student->first_name }} {{ $result->student->last_name }}</div>
-            </div>
-            <div class="info-row">
-                <div class="info-label">Date of Birth:</div>
-                <div class="info-value">{{ $result->student->date_of_birth->format('F d, Y') }}</div>
-            </div>
-            <div class="info-row">
-                <div class="info-label">Age at Examination:</div>
-                <div class="info-value">{{ number_format($result->age_at_exam, 2) }} years</div>
-            </div>
-            <div class="info-row">
-                <div class="info-label">Grade Level Applied:</div>
-                <div class="info-value">{{ $result->grade_level_at_exam ?? 'N/A' }}</div>
-            </div>
-            <div class="info-row">
-                <div class="info-label">Application Number:</div>
-                <div class="info-value">{{ $result->student->application_number ?? 'N/A' }}</div>
-            </div>
+        @if(!empty($systemLogo) && file_exists(public_path($systemLogo)))
+            <img src="{{ public_path($systemLogo) }}" alt="Logo">
+        @elseif(file_exists(public_path('storage/logo.png')))
+             <img src="{{ public_path('storage/logo.png') }}" alt="Logo">
+        @endif
+        <div class="header-text">
+            <div class="school-name">Southville International School and Colleges</div>
+            <div class="document-title">PSYCHOLOGICAL TEST PROFILE SHEET</div>
         </div>
     </div>
 
-    <!-- Exam Information -->
-    <div class="section">
-        <div class="section-title">EXAMINATION DETAILS</div>
-        <div class="info-grid">
-            <div class="info-row">
-                <div class="info-label">Examination:</div>
-                <div class="info-value">{{ $result->exam->title }}</div>
-            </div>
-            <div class="info-row">
-                <div class="info-label">Date Taken:</div>
-                <div class="info-value">{{ $result->created_at->format('F d, Y') }}</div>
-            </div>
-        </div>
+    <div class="doc-code">SISC/QSF-GUI-006 Rev. 000 01/21/04</div>
+
+    <div class="section-header">I. BACKGROUND INFORMATION</div>
+    <div class="info-box">
+        <table class="info-table">
+            <tr>
+                <td width="15%"><strong>Name:</strong></td>
+                <td width="50%" style="border-bottom: 1px solid black;">{{ $result->student->full_name }}</td>
+                <td width="10%" align="right"><strong>Age:</strong></td>
+                <td width="25%" style="border-bottom: 1px solid black;">{{ number_format($result->age_at_exam, 1) }}</td>
+            </tr>
+            <tr>
+                <td><strong>Birthdate:</strong></td>
+                <td style="border-bottom: 1px solid black;">{{ $result->student->date_of_birth->format('F d, Y') }}</td>
+                <td align="right"><strong>Date Assessed:</strong></td>
+                <td style="border-bottom: 1px solid black;">{{ $result->created_at->format('F d, Y') }}</td>
+            </tr>
+            <tr>
+                <td><strong>Level Applied:</strong></td>
+                <td style="border-bottom: 1px solid black;">{{ $result->grade_level_at_exam ?? 'N/A' }}</td>
+                <td align="right"><strong>SY:</strong></td>
+                <td style="border-bottom: 1px solid black;">AY {{ now()->format('Y') }}-{{ now()->addYear()->format('Y') }}</td>
+            </tr>
+            <tr>
+                <td><strong>School Last Attended:</strong></td>
+                <td style="border-bottom: 1px solid black;" colspan="3">{{ $result->student->school_last_attended ?? 'N/A' }}</td>
+            </tr>
+        </table>
     </div>
 
-    <!-- Results -->
-    <div class="section">
-        <div class="section-title">EXAMINATION RESULTS</div>
-        <div class="result-box">
-            <div class="result-score">{{ $result->raw_score }}</div>
-            <div class="result-description">{{ $result->performance_description ?? 'Not Available' }}</div>
-            @if($result->percentile)
-                <div class="result-percentile">{{ $result->percentile }}th Percentile</div>
-            @endif
-        </div>
-    </div>
+    <div class="section-header">II. ASSESSMENT RESULTS</div>
 
-    <!-- Psychometrician Assessment -->
-    @if($result->psychometrician_notes)
-    <div class="section">
-        <div class="section-title">PSYCHOMETRICIAN ASSESSMENT</div>
-        <div class="notes-box">
-            {{ $result->psychometrician_notes }}
-        </div>
-    </div>
-    @endif
+    @php
+        $scores = $result->getSectionScores();
+        
+        $intelligenceProfile = $scores->where('type', 'intelligence');
+        $achievementProfile = $scores->where('type', 'achievement');
 
-    <!-- Counselor Assessment -->
-    @if($result->counselor_notes)
-    <div class="section">
-        <div class="section-title">COUNSELOR ASSESSMENT</div>
-        <div class="notes-box">
-            {{ $result->counselor_notes }}
-        </div>
-    </div>
-    @endif
+        if ($intelligenceProfile->isEmpty() && $achievementProfile->isEmpty() && $scores->isNotEmpty()) {
+             $intelligenceProfile = $scores;
+        }
+        
+        $showFallback = $scores->isEmpty();
+    @endphp
 
-    <!-- Recommendation -->
-    @if($result->recommendation)
-    <div class="section">
-        <div class="section-title">RECOMMENDATION</div>
-        <div class="notes-box" style="font-weight: bold; font-size: 14px; text-align: center;">
-            {{ strtoupper($result->recommendation) }}
+    <!-- Intelligence Profile Table -->
+    <table class="result-table">
+        <thead>
+            <tr>
+                <th colspan="5" style="background-color: #e0e0e0; text-transform: uppercase;">INTELLIGENCE PROFILE</th>
+            </tr>
+            <tr>
+                <th width="35%" style="text-align: left; padding-left: 10px;">AREA</th>
+                <th width="15%">RAW SCORE</th>
+                <th width="15%">SAI</th>
+                <th width="15%">% Tile</th>
+                <th width="20%">DESCRIPTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php
+                // Helper to find score by flexible title matching
+                $findScore = function($scores, $keywords) {
+                    foreach($scores as $score) {
+                        foreach($keywords as $keyword) {
+                            if (stripos($score['title'], $keyword) !== false) {
+                                return $score;
+                            }
+                        }
+                    }
+                    return null;
+                };
+
+                // Helper for qualitative descriptions
+                $getDesc = function($sai) {
+                    if (!$sai || $sai == '-') return '-';
+                    $val = (int)$sai;
+                    if ($val >= 128) return 'Very Superior';
+                    if ($val >= 120) return 'Superior';
+                    if ($val >= 111) return 'Above Average';
+                    if ($val >= 90)  return 'Average';
+                    if ($val >= 80)  return 'Below Average';
+                    if ($val >= 70)  return 'Well Below Average';
+                    return 'Low';
+                };
+
+                // Intelligence Rows
+                $verbal = $findScore($intelligenceProfile, ['Verbal']);
+                $nonVerbal = $findScore($intelligenceProfile, ['Non-Verbal', 'Non Verbal']);
+            @endphp
+
+            <tr>
+                <td style="text-align: left; padding-left: 10px; font-weight: bold; font-style: italic;">VERBAL</td>
+                <td>{{ $verbal['raw_score'] ?? '' }}</td>
+                <td>-</td>
+                <td>{{ isset($verbal) ? $verbal['percent_score'].'%' : '' }}</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td style="text-align: left; padding-left: 10px; font-weight: bold; font-style: italic;">NON-VERBAL</td>
+                <td>{{ $nonVerbal['raw_score'] ?? '' }}</td>
+                <td>-</td>
+                <td>{{ isset($nonVerbal) ? $nonVerbal['percent_score'].'%' : '' }}</td>
+                <td>-</td>
+            </tr>
+            <tr style="background-color: #f9f9f9; font-weight: bold;">
+                <td style="text-align: left; padding-left: 10px;">TOTAL (OLSAT)</td>
+                <td>{{ $result->raw_score }}</td>
+                <td>{{ $result->sai ?? '-' }}</td>
+                <td>{{ $result->percentile ? $result->percentile.'%' : '-' }}</td>
+                <td>{{ $getDesc($result->sai) }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Achievement Profile Table -->
+    <table class="result-table" style="margin-top: 15px;">
+        <thead>
+            <tr>
+                <th colspan="7" style="background-color: #e0e0e0; text-transform: uppercase;">ACHIEVEMENT PROFILE</th>
+            </tr>
+            <tr>
+                <th width="25%">Subjects</th>
+                <th width="10%">RS</th>
+                <th width="10%">SS</th>
+                <th width="10%">GE</th>
+                <th width="10%">PR</th>
+                <th width="10%">STA</th>
+                <th width="25%">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php
+                $subjects = ['Reading', 'Math', 'Language', 'Science'];
+            @endphp
+
+            @foreach($subjects as $subject)
+                @php
+                    $score = $findScore($achievementProfile, [$subject]);
+                @endphp
+                <tr>
+                    <td style="text-align: left; font-weight: bold; font-style: italic; padding-left: 5px;">{{ $subject }}</td>
+                    <td>{{ $score['raw_score'] ?? '' }}</td>
+                    <td></td><td></td><td></td><td></td><td></td>
+                </tr>
+            @endforeach
+            
+            <!-- Basic Battery Row -->
+             @php
+                $basicBattery = $findScore($achievementProfile, ['Basic Battery', 'Battery']);
+            @endphp
+            <tr>
+                <td style="text-align: left; font-weight: bold; font-style: italic; padding-left: 5px;">Basic Battery</td>
+                <td>{{ $basicBattery['raw_score'] ?? '' }}</td>
+                <td></td><td></td><td></td><td></td><td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="section-header">III. RECOMMENDATIONS</div>
+    <div class="recommendation-section">
+        <div>
+            Level Recommended: <span style="border-bottom: 1px solid black; display: inline-block; width: 200px; text-align: center; font-weight: bold;">{{ $result->recommendation ?? '____________________' }}</span>
+        </div>
+        <div class="checkbox-list" style="margin-top: 5px;">
+            <div class="checkbox-item">[ &nbsp;&nbsp; ] Strongly Recommended</div>
+            <div class="checkbox-item">[ &nbsp;&nbsp; ] Recommended</div>
+            <div class="checkbox-item">[ &nbsp;&nbsp; ] Probation: Suggested Intervention <span style="border-bottom: 1px solid black; display: inline-block; width: 250px;"></span></div>
+            <div class="checkbox-item">[ &nbsp;&nbsp; ] Not Recommended</div>
         </div>
     </div>
-    @endif
 
     <!-- Signatures -->
+    @php
+        $psychSig = $result->signatures->where('role', 'psychometrician')->first();
+        $counselorSig = $result->signatures->where('role', 'counselor')->first();
+    @endphp
+
     <div class="signatures">
-        @php
-            $psychSig = $result->signatures->where('role', 'psychometrician')->first();
-            $counselorSig = $result->signatures->where('role', 'counselor')->first();
-        @endphp
-
+        <!-- LEFT: Psychometrician (Roel) -->
         <div class="signature-block">
-            <div class="signature-line">
-                @if($psychSig)
-                    <div class="signature-name">{{ $psychSig->user->name }}</div>
-                    <div>Psychometrician</div>
-                    <div class="signature-date">Signed: {{ $psychSig->signed_at->format('F d, Y h:i A') }}</div>
-                @else
-                    <div style="color: #999;">Pending Signature</div>
-                    <div>Psychometrician</div>
+            <div style="position: relative; padding-top: 135px;"> <!-- Reserve space for signature -->
+                @if($psychSig && $psychSig->user->signature_path && file_exists(public_path('storage/' . $psychSig->user->signature_path)))
+                    {{-- Position absolute relative to this block, centered horizontally, sitting on the line --}}
+                    <img src="{{ public_path('storage/' . $psychSig->user->signature_path) }}" 
+                         style="height: 70px; position: absolute; bottom: 135px; left: 50%; transform: translateX(-50%); z-index: 10;">
                 @endif
+                
+                <div class="signature-line" style="margin-top: 0; position: relative; z-index: 5;">
+                     @if($psychSig)
+                        <div class="signee-name">{{ $psychSig->user->name }}</div>
+                     @else
+                         <div class="signee-name">Roel (Psychometrician)</div>
+                     @endif
+                    <div class="signee-title">Guidance Associate</div>
+                </div>
             </div>
         </div>
 
-        <div class="signature-block">
-            <div class="signature-line">
-                @if($counselorSig)
-                    <div class="signature-name">{{ $counselorSig->user->name }}</div>
-                    <div>Guidance Counselor</div>
-                    <div class="signature-date">Signed: {{ $counselorSig->signed_at->format('F d, Y h:i A') }}</div>
-                @else
-                    <div style="color: #999;">Pending Signature</div>
-                    <div>Guidance Counselor</div>
+        <!-- RIGHT: Counselor (IT Support) -->
+        <div class="signature-block" style="float: right;">
+            <div style="text-align: right; margin-bottom: 20px;">
+                Date: <span style="border-bottom: 1px solid black; display: inline-block; width: 100px; text-align: center;">{{ $result->created_at->format('M d, Y') }}</span>
+            </div>
+            
+             <div style="position: relative; padding-top: 135px;"> <!-- Reserve space for signature -->
+                 @if($counselorSig && $counselorSig->user->signature_path && file_exists(public_path('storage/' . $counselorSig->user->signature_path)))
+                    <img src="{{ public_path('storage/' . $counselorSig->user->signature_path) }}" 
+                         style="height: 70px; position: absolute; bottom: 135px; left: 50%; transform: translateX(-50%); z-index: 10;">
                 @endif
+
+                <div class="signature-line" style="margin-top: 0; position: relative; z-index: 5;">
+                    @if($counselorSig)
+                        <div class="signee-name">{{ $counselorSig->user->name }}</div>
+                     @else
+                        <div class="signee-name">IT Support</div>
+                     @endif
+                    <div class="signee-title">Head, CAPS</div>
+                </div>
             </div>
         </div>
+        <div class="clear"></div>
     </div>
 
-    <div class="footer">
-        This is an official document from SISC Basic Education Entrance Examination System.<br>
-        Generated on {{ now()->format('F d, Y h:i A') }}
-    </div>
 </body>
 </html>
+

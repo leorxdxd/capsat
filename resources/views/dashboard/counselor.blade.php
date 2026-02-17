@@ -1,150 +1,254 @@
-<!-- Counselor Dashboard -->
-<div class="space-y-6">
-    <!-- Welcome Header -->
-    <div class="bg-gradient-to-r from-green-600 to-emerald-600 rounded-2xl shadow-xl p-8 text-white">
-        <div class="flex items-center justify-between">
-            <div>
-                <h1 class="text-3xl font-bold mb-2">Welcome, {{ Auth::user()->name }}</h1>
-                <p class="text-green-100">Guidance Counselor Dashboard</p>
-            </div>
-            <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4">
-                <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                </svg>
-            </div>
-        </div>
-    </div>
+<div class="space-y-8 animate-fade-in-up">
+    <!-- Welcome Hero Section -->
+    <div class="relative bg-gradient-to-br from-sisc-purple to-violet-900 rounded-lg shadow-2xl p-8 md:p-12 text-white overflow-hidden group">
+                <!-- Animated Background Elements -->
+                <div class="absolute top-0 right-0 -mr-24 -mt-24 w-80 h-80 rounded-full bg-sisc-gold opacity-20 blur-3xl group-hover:scale-110 transition-transform duration-1000"></div>
+                <div class="absolute bottom-0 left-0 -ml-24 -mb-24 w-64 h-64 rounded-full bg-purple-500 opacity-20 blur-3xl group-hover:scale-110 transition-transform duration-1000 delay-100"></div>
+                <div class="absolute inset-0 bg-pattern opacity-5"></div>
 
-    <!-- Quick Stats -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border-l-4 border-yellow-500 hover:shadow-xl transition-shadow">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 font-medium">Pending Reviews</p>
-                    <p class="text-3xl font-bold text-gray-900 dark:text-white mt-2">{{ \App\Models\ExamResult::where('status', 'for_counselor')->count() }}</p>
-                </div>
-                <div class="bg-yellow-100 dark:bg-yellow-900 rounded-full p-3">
-                    <svg class="w-8 h-8 text-yellow-600 dark:text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                </div>
-            </div>
-        </div>
+                <div class="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <div class="space-y-2">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-xs font-bold uppercase tracking-widest text-purple-100">
+                            <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                            Counselor Portal
+                        </div>
 
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border-l-4 border-green-500 hover:shadow-xl transition-shadow">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 font-medium">Approved</p>
-                    <p class="text-3xl font-bold text-gray-900 dark:text-white mt-2">{{ \App\Models\ExamResult::where('status', 'counselor_signed')->count() }}</p>
-                </div>
-                <div class="bg-green-100 dark:bg-green-900 rounded-full p-3">
-                    <svg class="w-8 h-8 text-green-600 dark:text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                </div>
-            </div>
-        </div>
+                        <h1 class="text-4xl md:text-5xl font-black tracking-tight leading-tight">
+                            Welcome back,<br>
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-purple-200">
+                                {{ Auth::user()->name }}
+                            </span>
+                        </h1>
 
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border-l-4 border-blue-500 hover:shadow-xl transition-shadow">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 font-medium">Total Reviewed</p>
-                    <p class="text-3xl font-bold text-gray-900 dark:text-white mt-2">{{ \App\Models\ResultSignature::where('role', 'counselor')->count() }}</p>
-                </div>
-                <div class="bg-blue-100 dark:bg-blue-900 rounded-full p-3">
-                    <svg class="w-8 h-8 text-blue-600 dark:text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 7l2 2 4-4"></path>
-                    </svg>
-                </div>
-            </div>
-        </div>
-    </div>
+                        <p class="text-purple-100 text-lg max-w-xl leading-relaxed opacity-90">
+                            You have <strong class="text-white">{{ $stats['pending'] }} pending reviews</strong> waiting for your expertise today.
+                        </p>
+                    </div>
 
-    <!-- Main Actions -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Pending Reviews -->
-        <a href="{{ route('counselor.reviews') }}" class="group bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl shadow-lg p-8 hover:shadow-2xl transition-all hover:-translate-y-1 text-white">
-            <div class="flex items-center mb-4">
-                <div class="bg-white/20 backdrop-blur-sm rounded-lg p-4 group-hover:scale-110 transition-transform">
-                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 7l2 2 4-4"></path>
-                    </svg>
-                </div>
-                <div class="ml-4">
-                    <h3 class="text-2xl font-bold">Review Results</h3>
-                    <p class="text-green-100 text-sm">{{ \App\Models\ExamResult::where('status', 'for_counselor')->count() }} pending</p>
+                    <div class="hidden md:block">
+                        <a href="{{ route('counselor.index') }}"
+                           class="group relative inline-flex items-center gap-3 px-6 py-3 bg-white text-sisc-purple rounded-lg font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all overflow-hidden">
+                            <span class="relative z-10">Start Reviewing</span>
+                            <svg class="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                            </svg>
+                            <div class="absolute inset-0 bg-purple-50 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                        </a>
+                    </div>
                 </div>
             </div>
-            <p class="text-green-100 mb-4">Review student exam results and provide recommendations</p>
-            <div class="flex items-center text-white font-medium">
-                <span>Go to Reviews</span>
-                <svg class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                </svg>
-            </div>
-        </a>
 
-        <!-- My Reviews -->
-        <a href="#" class="group bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 hover:shadow-2xl transition-all hover:-translate-y-1">
-            <div class="flex items-center mb-4">
-                <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg p-4 group-hover:scale-110 transition-transform">
-                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                    </svg>
-                </div>
-                <div class="ml-4">
-                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white">My Reviews</h3>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm">View history</p>
-                </div>
-            </div>
-            <p class="text-gray-600 dark:text-gray-400 mb-4">View all results you've reviewed and approved</p>
-            <div class="flex items-center text-blue-600 dark:text-blue-400 font-medium">
-                <span>View History</span>
-                <svg class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                </svg>
-            </div>
-        </a>
-    </div>
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Pending Card -->
+                <div class="bg-white rounded-lg p-6 shadow-xl shadow-purple-900/5 border border-purple-50 hover:border-purple-100 hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-amber-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
 
-    <!-- Recent Reviews -->
-    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-        <div class="flex items-center justify-between mb-6">
-            <h3 class="text-lg font-bold text-gray-900 dark:text-white">Recent Activity</h3>
-            <a href="{{ route('counselor.reviews') }}" class="text-sm text-green-600 dark:text-green-400 hover:underline">View All</a>
-        </div>
-        <div class="space-y-3">
-            @forelse(\App\Models\ExamResult::with(['student', 'exam'])->where('status', 'for_counselor')->latest()->take(5)->get() as $result)
-                <a href="{{ route('counselor.show', $result) }}" class="block p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-4">
-                            <div class="bg-green-100 dark:bg-green-900 rounded-full p-2">
-                                <svg class="w-5 h-5 text-green-600 dark:text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                             </div>
-                            <div>
-                                <p class="font-medium text-gray-900 dark:text-white">{{ $result->student->first_name }} {{ $result->student->last_name }}</p>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ $result->exam->title }} • Score: {{ $result->raw_score }}</p>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <span class="px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
-                                Pending Review
+                            <span class="text-xs font-bold text-amber-600 bg-amber-50 px-3 py-1 rounded-full uppercase tracking-wider">
+                                Priority
                             </span>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ $result->created_at->diffForHumans() }}</p>
+                        </div>
+                        <div class="space-y-1">
+                            <p class="text-4xl font-black text-gray-900 tracking-tight group-hover:text-amber-600 transition-colors">
+                                {{ $stats['pending'] }}
+                            </p>
+                            <p class="text-sm font-bold text-gray-400 uppercase tracking-widest">Pending Reviews</p>
                         </div>
                     </div>
-                </a>
-            @empty
-                <div class="text-center py-12">
-                    <svg class="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <p class="text-gray-500 dark:text-gray-400">No pending reviews at the moment</p>
-                    <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">New results will appear here when ready for review</p>
                 </div>
-            @endforelse
-        </div>
-    </div>
+
+                <!-- Approved Card -->
+                <div class="bg-white rounded-lg p-6 shadow-xl shadow-purple-900/5 border border-purple-50 hover:border-purple-100 hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full uppercase tracking-wider">
+                                This Month
+                            </span>
+                        </div>
+                        <div class="space-y-1">
+                            <p class="text-4xl font-black text-gray-900 tracking-tight group-hover:text-emerald-600 transition-colors">
+                                {{ $stats['approved'] }}
+                            </p>
+                            <p class="text-sm font-bold text-gray-400 uppercase tracking-widest">Approved</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total Card -->
+                <div class="bg-white rounded-lg p-6 shadow-xl shadow-purple-900/5 border border-purple-50 hover:border-purple-100 hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                </svg>
+                            </div>
+                            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full uppercase tracking-wider">
+                                Lifetime
+                            </span>
+                        </div>
+                        <div class="space-y-1">
+                            <p class="text-4xl font-black text-gray-900 tracking-tight group-hover:text-blue-600 transition-colors">
+                                {{ $stats['total_reviewed'] }}
+                            </p>
+                            <p class="text-sm font-bold text-gray-400 uppercase tracking-widest">Total Reviews</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Recent Activity (2/3) -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+                            <span class="w-1.5 h-6 bg-sisc-purple rounded-full"></span>
+                            Recent Incoming Reviews
+                        </h2>
+                        <a href="{{ route('counselor.index') }}" class="text-sm font-bold text-sisc-purple hover:text-violet-900 hover:underline">
+                            View All &rarr;
+                        </a>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-xl shadow-purple-900/5 border border-gray-100 overflow-hidden">
+                        <div class="divide-y divide-gray-50">
+                            @forelse($recentPending as $result)
+                                <div class="p-5 hover:bg-gray-50 transition-all duration-200 group">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-100 to-indigo-100 flex items-center justify-center text-sisc-purple font-bold text-lg ring-4 ring-white shadow-sm group-hover:scale-105 transition-transform">
+                                                {{ substr($result->student->first_name ?? '?', 0, 1) }}
+                                            </div>
+                                            <div>
+                                                <h4 class="font-bold text-gray-900 group-hover:text-sisc-purple transition-colors text-base">
+                                                    {{ $result->student->full_name ?? 'Unknown Student' }}
+                                                </h4>
+                                                <p class="text-xs text-gray-500 font-medium uppercase tracking-wide mt-0.5">
+                                                    {{ $result->exam->title }}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex items-center gap-4">
+                                            <div class="text-right hidden sm:block">
+                                                <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Score</p>
+                                                <p class="font-black text-gray-900">{{ $result->raw_score }}</p>
+                                            </div>
+                                            <a href="{{ route('counselor.show', $result) }}" class="p-2 text-gray-400 hover:text-sisc-purple hover:bg-purple-50 rounded-lg transition-all">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="p-10 text-center">
+                                    <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-base font-bold text-gray-900">All Caught Up!</h3>
+                                    <p class="text-sm text-gray-500 mt-1">No pending reviews at the moment.</p>
+                                </div>
+                            @endforelse
+                        </div>
+
+                        @if($recentPending->count() > 0)
+                            <div class="p-4 bg-gray-50 border-t border-gray-100 text-center">
+                                <a href="{{ route('counselor.index') }}" class="text-xs font-bold text-gray-500 hover:text-sisc-purple uppercase tracking-widest transition-colors">
+                                    View All Pending Reviews
+                                </a>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Sidebar (1/3) -->
+                <div class="space-y-6">
+                    <!-- Quick Actions -->
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2 mb-6">
+                            <span class="w-1.5 h-6 bg-sisc-gold rounded-full"></span>
+                            Quick Actions
+                        </h2>
+
+                        <div class="grid grid-cols-1 gap-4">
+                            <a href="{{ route('counselor.index') }}" class="flex items-center p-4 bg-white rounded-lg shadow-lg shadow-purple-900/5 hover:shadow-xl border border-gray-100 hover:border-purple-200 transition-all group">
+                                <div class="w-12 h-12 rounded-lg bg-purple-50 text-sisc-purple flex items-center justify-center group-hover:scale-110 group-hover:bg-sisc-purple group-hover:text-white transition-all duration-300">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                                    </svg>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-base font-bold text-gray-900">Start Reviewing</p>
+                                    <p class="text-xs text-gray-500 group-hover:text-sisc-purple transition-colors">Process pending exams</p>
+                                </div>
+                            </a>
+
+                            <a href="{{ route('counselor.history') }}" class="flex items-center p-4 bg-white rounded-lg shadow-lg shadow-purple-900/5 hover:shadow-xl border border-gray-100 hover:border-purple-200 transition-all group">
+                                <div class="w-12 h-12 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-base font-bold text-gray-900">View History</p>
+                                    <p class="text-xs text-gray-500 group-hover:text-blue-600 transition-colors">Past signed results</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Calendar Widget (Mock) -->
+                    <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg p-6 text-white shadow-xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 rounded-full bg-white opacity-10 blur-2xl"></div>
+
+                        <div class="flex items-center justify-between mb-6 relative z-10">
+                            <h3 class="font-bold text-lg">Today's Focus</h3>
+                            <span class="text-xs font-bold px-2 py-1 rounded bg-white/20">{{ now()->format('M d') }}</span>
+                        </div>
+
+                        <div class="space-y-4 relative z-10">
+                            <div class="flex items-center gap-3">
+                                <div class="w-1 h-10 rounded-full bg-sisc-gold"></div>
+                                <div>
+                                    <p class="text-sm font-bold">Review High Priority</p>
+                                    <p class="text-xs text-gray-400">3 students pending &gt; 2 days</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-1 h-10 rounded-full bg-purple-400"></div>
+                                <div>
+                                    <p class="text-sm font-bold">Team Meeting</p>
+                                    <p class="text-xs text-gray-400">2:00 PM - Conference Room</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-white/10">
+                            <p class="text-xs text-gray-400 text-center italic">"Excellence in every action"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 </div>
+

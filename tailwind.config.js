@@ -14,6 +14,23 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                sisc: {
+                    purple: 'var(--sisc-purple, #2E1065)',
+                    gold: 'var(--sisc-gold, #F59E0B)',
+                }
+            },
+            borderRadius: {
+                'none': '0',
+                'sm': '2px',
+                DEFAULT: '2px',
+                'md': '2px',
+                'lg': '2px',
+                'xl': '2px',
+                '2xl': '2px',
+                '3xl': '2px',
+                'full': '9999px',
+            }
         },
     },
 

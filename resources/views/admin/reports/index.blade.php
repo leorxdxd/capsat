@@ -1,17 +1,17 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-bold text-xl text-sisc-purple leading-tight">
             {{ __('Reports & Analytics') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+        <div class="w-full px-4 sm:px-6 lg:px-8 space-y-8">
 
             <!-- Overview Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Total Users -->
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border-l-4 border-blue-500">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border-l-4 border-blue-500">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">Total Users</p>
@@ -30,7 +30,7 @@
                 </div>
 
                 <!-- Total Exams -->
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border-l-4 border-green-500">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border-l-4 border-green-500">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">Total Exams</p>
@@ -49,7 +49,7 @@
                 </div>
 
                 <!-- Total Results -->
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border-l-4 border-purple-500">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border-l-4 border-purple-500">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">Exam Results</p>
@@ -68,7 +68,7 @@
                 </div>
 
                 <!-- Students -->
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border-l-4 border-orange-500">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border-l-4 border-orange-500">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">Students</p>
@@ -89,7 +89,7 @@
             <!-- Charts Row -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Users by Role -->
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
                         <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
@@ -125,7 +125,7 @@
                 </div>
 
                 <!-- Results by Status -->
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
                         <svg class="w-5 h-5 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
@@ -165,7 +165,7 @@
             </div>
 
             <!-- Registration Trend -->
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
                 <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
                     <svg class="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
@@ -192,7 +192,7 @@
             <!-- Exam Details & System Summary -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Exam Details -->
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
                         <svg class="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
@@ -224,7 +224,7 @@
                 </div>
 
                 <!-- Recent Activity -->
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
                         <svg class="w-5 h-5 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -260,3 +260,4 @@
         </div>
     </div>
 </x-app-layout>
+

@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ExamAttempt extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'user_id',
@@ -18,11 +19,14 @@ class ExamAttempt extends Model
         'raw_score',
         'age_at_attempt',
         'grade_level_at_attempt',
+        'retake_requested_at',
+        'retake_reason',
     ];
 
     protected $casts = [
         'started_at' => 'datetime',
         'submitted_at' => 'datetime',
+        'retake_requested_at' => 'datetime',
         'age_at_attempt' => 'decimal:2',
     ];
 
@@ -39,6 +43,11 @@ class ExamAttempt extends Model
     public function answers()
     {
         return $this->hasMany(Answer::class);
+    }
+
+    public function examResult()
+    {
+        return $this->hasOne(ExamResult::class);
     }
 
     /**

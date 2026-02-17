@@ -7,6 +7,8 @@ use App\Models\ExamAttempt;
 use App\Services\ResultService;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Notifications\SystemNotification;
+use Illuminate\Support\Facades\Notification;
 
 class ResultController extends Controller
 {
@@ -23,9 +25,10 @@ class ResultController extends Controller
     public function index()
     {
         $results = ExamResult::with(['student', 'exam'])
-            ->whereIn('status', ['draft', 'returned'])
+            ->whereIn('status', ['draft', 'returned', 'counselor_approved'])
             ->latest()
-            ->get();
+            ->get()
+            ->unique('student_id');
             
         return view('results.index', compact('results'));
     }
@@ -36,7 +39,40 @@ class ResultController extends Controller
     public function show(ExamResult $result)
     {
         $result->load(['student', 'exam', 'signatures.user']);
-        return view('results.show', compact('result'));
+
+        // Calculate precise age at time of exam using new helper
+        $ageData = $result->student->getAgeDecomposed($result->created_at);
+        $ageYears = $ageData['years'];
+        $ageMonths = $ageData['months'];
+
+        // Fetch precise norm data
+        $normData = null;
+        $normTable = \App\Models\NormTable::where('exam_id', $result->exam_id)->first();
+        
+        if ($normTable) {
+            $normRange = $normTable->findNormRange($ageYears, $ageMonths, (int)$result->raw_score);
+            
+            if ($normRange) {
+                $normData = $normRange;
+                
+                // Auto-fill if missing (legacy support)
+                if (!$result->performance_description || !$result->percentile) {
+                    $result->update([
+                        'performance_description' => $normRange->description,
+                        'percentile' => $normRange->percentile,
+                    ]);
+                    $result->refresh();
+                }
+            }
+        }
+
+        // Fetch ALL results for this student to display in the profile table
+        $allResults = ExamResult::with('exam')
+            ->where('student_id', $result->student_id)
+            ->latest()
+            ->get();
+
+        return view('results.show', compact('result', 'normData', 'ageYears', 'ageMonths', 'allResults'));
     }
     
     /**
@@ -46,14 +82,37 @@ class ResultController extends Controller
     {
         $validated = $request->validate([
             'psychometrician_notes' => 'nullable|string',
-            'recommendation' => 'nullable|string',
+            'recommendation' => 'required|string',
         ]);
         
-        $result->update($validated);
+        $result->update([
+            'psychometrician_notes' => $request->psychometrician_notes,
+            'recommendation' => $request->recommendation,
+        ]);
+
+        // Add Psychometrician Signature if not exists
+        if (!$result->signatures()->where('role', 'psychometrician')->exists()) {
+             $result->signatures()->create([
+                'user_id' => auth()->id(),
+                'role' => 'psychometrician',
+                'signed_at' => now(),
+            ]);
+        }
+        
         $result->sendToCounselor();
         
+        // Notify Counselors
+        $counselors = \App\Models\User::whereHas('role', function ($query) {
+            $query->where('slug', 'counselor');
+        })->get();
+        Notification::send($counselors, new SystemNotification(
+            'New exam result pending review for ' . $result->student->full_name,
+            route('counselor.show', $result->id),
+            'info'
+        ));
+        
         return redirect()->route('results.index')
-            ->with('success', 'Result sent to counselor for review.');
+            ->with('success', 'Result signed and sent to counselor for review.');
     }
     
     /**
@@ -61,7 +120,8 @@ class ResultController extends Controller
      */
     public function viewPdf(ExamResult $result)
     {
-        if (!$result->canBePrinted()) {
+        // Allow staff to print drafts for signing/review
+        if (!$result->canBePrinted() && !auth()->user()->hasAnyRole(['psychometrician', 'counselor', 'admin'])) {
             return back()->with('error', 'Result must have both signatures before printing.');
         }
 
@@ -76,7 +136,8 @@ class ResultController extends Controller
      */
     public function downloadPdf(ExamResult $result)
     {
-        if (!$result->canBePrinted()) {
+        // Allow staff to print drafts for signing/review
+        if (!$result->canBePrinted() && !auth()->user()->hasAnyRole(['psychometrician', 'counselor', 'admin'])) {
             return back()->with('error', 'Result must have both signatures before printing.');
         }
 
@@ -96,14 +157,60 @@ class ResultController extends Controller
             return back()->with('error', 'Counselor must sign first.');
         }
         
-        $this->resultService->signResult(
-            $result,
-            auth()->user(),
-            'psychometrician',
-            $request->input('comments')
-        );
+        // Allow final edits and mark as official
+        $result->update([
+            'psychometrician_notes' => $request->input('psychometrician_notes'),
+            'recommendation' => $request->input('recommendation'),
+        ]);
+
+        $result->markAsOfficial();
         
+        // Notify Student
+        $result->student->user->notify(new SystemNotification(
+            'Your exam result has been released.',
+            route('student.exams.result', $result->exam_attempt_id),
+            'success'
+        ));
+
         return redirect()->route('results.index')
             ->with('success', 'Result finalized and ready for printing.');
+    }
+
+    /**
+     * List retake requests (Psychometrician)
+     */
+    public function indexRetakeRequests()
+    {
+        $requests = ExamAttempt::whereNotNull('retake_requested_at')
+            // ->whereNull('deleted_at') // implicit with SoftDeletes
+            ->with(['user.student', 'exam'])
+            ->orderBy('retake_requested_at', 'asc') // oldest first
+            ->get();
+            
+        return view('results.retake-requests', compact('requests'));
+    }
+
+    /**
+     * Approve a retake request
+     */
+    public function approveRetake(Request $request, ExamAttempt $attempt)
+    {
+        // Delete the result first if it exists
+        // (Since result doesn't have SoftDeletes yet, we force delete it to clear the record)
+        if ($attempt->examResult) {
+            $attempt->examResult->delete();
+        }
+
+        // Soft delete the attempt to archive it
+        $attempt->delete();
+        
+        // Notify Student
+        $attempt->user->notify(new SystemNotification(
+            'Your retake request for ' . $attempt->exam->title . ' has been approved.',
+            route('student.exams.show', $attempt->exam_id),
+            'success'
+        ));
+
+        return back()->with('success', 'Retake approved. The student can now start a new attempt.');
     }
 }

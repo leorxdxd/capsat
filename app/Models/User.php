@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role_id',
+        'signature_path',
     ];
 
     public function role()
@@ -43,6 +44,11 @@ class User extends Authenticatable
     public function hasRole($slug)
     {
         return $this->role && $this->role->slug === $slug;
+    }
+
+    public function hasAnyRole(array $roles)
+    {
+        return $this->role && in_array($this->role->slug, $roles);
     }
 
     /**

@@ -21,4 +21,12 @@ class Exam extends Model
     {
         return $this->hasMany(Section::class)->orderBy('order');
     }
+
+    /**
+     * Get all questions for the exam through sections
+     */
+    public function questions()
+    {
+        return $this->hasManyThrough(Question::class, Section::class);
+    }
 }

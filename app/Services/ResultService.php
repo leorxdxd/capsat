@@ -20,6 +20,7 @@ class ResultService
         
         // Calculate age at exam time
         $ageAtExam = $student->getAgeInYears($attempt->submitted_at);
+        $ageDecomposed = $student->getAgeDecomposed($attempt->submitted_at);
         
         // Calculate raw score
         $rawScore = $attempt->calculateRawScore();
@@ -29,14 +30,18 @@ class ResultService
         
         $performanceDescription = null;
         $percentile = null;
+        $sai = null;
+        $stanine = null;
         
         if ($normTable) {
             // Lookup interpretation
-            $normRange = $normTable->findNormRange($ageAtExam, $rawScore);
+            $normRange = $normTable->findNormRange($ageDecomposed['years'], $ageDecomposed['months'], $rawScore);
             
             if ($normRange) {
                 $performanceDescription = $normRange->description;
                 $percentile = $normRange->percentile;
+                $sai = $normRange->sai;
+                $stanine = $normRange->stanine;
             }
         }
         
@@ -47,6 +52,9 @@ class ResultService
                 'student_id' => $student->id,
                 'exam_id' => $attempt->exam_id,
                 'raw_score' => $rawScore,
+                'total_score' => $attempt->exam->total_points ?? 0,
+                'sai' => $sai,
+                'stanine' => $stanine,
                 'age_at_exam' => $ageAtExam,
                 'grade_level_at_exam' => $attempt->grade_level_at_attempt ?? $student->current_grade_level,
                 'performance_description' => $performanceDescription,
@@ -74,11 +82,10 @@ class ResultService
         
         // Update workflow status
         if ($role === 'counselor') {
-            $result->status = 'counselor_signed';
+            $result->status = 'counselor_approved';
             $result->save();
-        } elseif ($role === 'psychometrician' && $result->hasCounselorSignature()) {
-            $result->markAsOfficial();
-        }
+        } 
+        // Psychometrician signature is handled in controller for 'for_counselor' status
         
         return $result;
     }

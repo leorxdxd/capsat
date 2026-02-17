@@ -52,7 +52,7 @@ class ReportsController extends Controller
         // Student Statistics
         $studentStats = [
             'total' => Student::count(),
-            'with_results' => Student::has('examAttempts')->count(),
+            'with_results' => DB::table('exam_attempts')->distinct('user_id')->count('user_id'),
         ];
 
         // Recent Activity (last 30 days)

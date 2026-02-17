@@ -25,12 +25,13 @@ class BackupController extends Controller
     {
         try {
             // Ensure backups directory exists
-            if (!Storage::disk('local')->exists('backups')) {
-                Storage::disk('local')->makeDirectory('backups');
+            $backupDir = storage_path('app/backups');
+            if (!is_dir($backupDir)) {
+                mkdir($backupDir, 0755, true);
             }
 
             $filename = 'backup_' . date('Y-m-d_His') . '.sql';
-            $filepath = storage_path('app/backups/' . $filename);
+            $filepath = $backupDir . '/' . $filename;
 
             // Get database config
             $host = config('database.connections.mysql.host');

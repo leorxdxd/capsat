@@ -1,12 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-bold text-xl text-sisc-purple leading-tight">
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="{{ Auth::user()->hasRole('admin') ? 'w-full' : 'max-w-[1600px]' }} mx-auto px-4 sm:px-6 lg:px-8">
             @if(Auth::user()->hasRole('admin'))
                 @include('dashboard.admin')
             @elseif(Auth::user()->hasRole('psychometrician'))
@@ -16,12 +16,13 @@
             @elseif(Auth::user()->hasRole('student'))
                 @include('dashboard.student')
             @else
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900 dark:text-gray-100">
-                        {{ __("You're logged in!") }}
+                <div class="bg-white overflow-hidden shadow-sm rounded-lg border border-gray-100 p-8 text-center">
+                    <div class="text-gray-900 font-bold text-lg">
+                        {{ __("Welcome back! You're logged in.") }}
                     </div>
                 </div>
             @endif
         </div>
     </div>
 </x-app-layout>
+

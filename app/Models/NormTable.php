@@ -26,15 +26,30 @@ class NormTable extends Model
     }
 
     /**
-     * Find the appropriate norm range for a given age and score
+     * Find the norm entry for a given age (years + months) and raw score
      */
-    public function findNormRange($age, $score)
+    public function findNormRange(int $ageYears, int $ageMonths, int $rawScore)
     {
         return $this->normRanges()
-            ->where('min_age', '<=', $age)
-            ->where('max_age', '>=', $age)
-            ->where('min_score', '<=', $score)
-            ->where('max_score', '>=', $score)
+            ->where('age_years', $ageYears)
+            ->where('age_months_start', '<=', $ageMonths)
+            ->where('age_months_end', '>=', $ageMonths)
+            ->where('raw_score', $rawScore)
             ->first();
+    }
+
+    /**
+     * Get all entries grouped by age bracket
+     */
+    public function getGroupedRanges()
+    {
+        return $this->normRanges()
+            ->orderBy('age_years')
+            ->orderBy('age_months_start')
+            ->orderBy('raw_score')
+            ->get()
+            ->groupBy(function ($range) {
+                return "{$range->age_years}_{$range->age_months_start}_{$range->age_months_end}";
+            });
     }
 }

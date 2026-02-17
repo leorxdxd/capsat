@@ -1,0 +1,11 @@
+[33m3961bb1[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m Implement Database Backup and Reports & Analytics admin features
+[33m3d7bf17[m Fix all admin features: dashboard links, navigation, audit logs, settings
+[33ma2b3d1d[m Implement settings management and audit logs for admin
+[33mc233441[m Fix User model: add SoftDeletes trait and student relationship
+[33mf73e4ad[m Implement user management CRUD for System Administrator
+[33m9677b05[m Add modern role-specific dashboards for all user types
+[33m2d7bc84[m Add initial users seeder with System Admin, Psychometrician, Counselor, and Student accounts
+[33m0110204[m Implement PDF Report Generation with DomPDF
+[33md58606f[m Implement Norm Table Management UI with CRUD and range management
+[33m30222e6[m Implement Result Processing and Dual-Signature Workflow
+[33m0d306c8[m Initial commit

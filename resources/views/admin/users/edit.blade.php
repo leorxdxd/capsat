@@ -1,89 +1,93 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="font-bold text-xl text-sisc-purple leading-tight">
                 {{ __('Edit User') }}
             </h2>
-            <a href="{{ route('admin.users.index') }}" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200">
-                ← Back to Users
+            <a href="{{ route('admin.users.index') }}" class="text-gray-500 hover:text-sisc-purple font-medium hover:underline transition-colors flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Back to Users
             </a>
         </div>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8 space-y-6">
+        <div class="w-full mx-auto px-4 sm:px-6 lg:px-12 space-y-8">
             <!-- Success Message -->
             @if(session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg relative" role="alert">
-                    <span class="block sm:inline">{{ session('success') }}</span>
+                <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-lg relative flex items-center gap-3 shadow-sm" role="alert">
+                    <svg class="w-5 h-5 flex-shrink-0 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span class="block sm:inline font-bold">{{ session('success') }}</span>
                 </div>
             @endif
 
             <!-- Edit User Form -->
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">User Information</h3>
+            <div class="bg-white rounded-lg shadow-lg p-8 border border-gray-100">
+                <h3 class="text-lg font-bold text-sisc-purple mb-6 border-b border-gray-100 pb-3">User Information</h3>
                 <form method="POST" action="{{ route('admin.users.update', $user) }}" class="space-y-6">
                     @csrf
                     @method('PUT')
 
-                    <!-- Name -->
-                    <div>
-                        <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Full Name <span class="text-red-500">*</span>
-                        </label>
-                        <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" required
-                               class="w-full rounded-lg border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                        @error('name')
-                            <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                        @enderror
-                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Name -->
+                        <div>
+                            <label for="name" class="block text-sm font-bold text-gray-700 mb-2">
+                                Full Name <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" required
+                                   class="w-full rounded-lg border-gray-300 focus:border-sisc-purple focus:ring focus:ring-purple-200 transition-shadow">
+                            @error('name')
+                                <p class="mt-1 text-sm text-red-600 font-medium">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-                    <!-- Email -->
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Email Address <span class="text-red-500">*</span>
-                        </label>
-                        <input type="email" name="email" id="email" value="{{ old('email', $user->email) }}" required
-                               class="w-full rounded-lg border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                        @error('email')
-                            <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                        @enderror
-                    </div>
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-sm font-bold text-gray-700 mb-2">
+                                Email Address <span class="text-red-500">*</span>
+                            </label>
+                            <input type="email" name="email" id="email" value="{{ old('email', $user->email) }}" required
+                                   class="w-full rounded-lg border-gray-300 focus:border-sisc-purple focus:ring focus:ring-purple-200 transition-shadow">
+                            @error('email')
+                                <p class="mt-1 text-sm text-red-600 font-medium">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-                    <!-- Role -->
-                    <div>
-                        <label for="role_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Role <span class="text-red-500">*</span>
-                        </label>
-                        <select name="role_id" id="role_id" required
-                                class="w-full rounded-lg border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                            @foreach($roles as $role)
-                                <option value="{{ $role->id }}" {{ old('role_id', $user->role_id) == $role->id ? 'selected' : '' }}>
-                                    {{ $role->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('role_id')
-                            <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                        @enderror
-                    </div>
+                        <!-- Role -->
+                        <div>
+                            <label for="role_id" class="block text-sm font-bold text-gray-700 mb-2">
+                                Role <span class="text-red-500">*</span>
+                            </label>
+                            <select name="role_id" id="role_id" required
+                                    class="w-full rounded-lg border-gray-300 focus:border-sisc-purple focus:ring focus:ring-purple-200 transition-shadow">
+                                @foreach($roles as $role)
+                                    <option value="{{ $role->id }}" {{ old('role_id', $user->role_id) == $role->id ? 'selected' : '' }}>
+                                        {{ $role->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('role_id')
+                                <p class="mt-1 text-sm text-red-600 font-medium">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-                    <!-- Email Verified -->
-                    <div class="flex items-center">
-                        <input type="checkbox" name="email_verified" id="email_verified" value="1" 
-                               {{ old('email_verified', $user->email_verified_at) ? 'checked' : '' }}
-                               class="rounded border-gray-300 dark:border-gray-700 text-blue-600 focus:ring-blue-500">
-                        <label for="email_verified" class="ml-2 text-sm text-gray-700 dark:text-gray-300">
-                            Email verified
-                        </label>
+                        <!-- Email Verified -->
+                        <div class="flex items-center pt-8">
+                            <input type="checkbox" name="email_verified" id="email_verified" value="1" 
+                                   {{ old('email_verified', $user->email_verified_at) ? 'checked' : '' }}
+                                   class="rounded border-gray-300 text-sisc-purple focus:ring-sisc-purple">
+                            <label for="email_verified" class="ml-2 text-sm font-medium text-gray-700">
+                                Email verified
+                            </label>
+                        </div>
                     </div>
 
                     <!-- Submit Buttons -->
-                    <div class="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
-                        <a href="{{ route('admin.users.index') }}" class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors">
+                    <div class="flex justify-end gap-3 pt-6 border-t border-gray-100">
+                        <a href="{{ route('admin.users.index') }}" class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors font-bold">
                             Cancel
                         </a>
-                        <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
+                        <button type="submit" class="px-5 py-2.5 bg-sisc-purple hover:bg-violet-900 text-white rounded-lg transition-all font-bold shadow-md hover:shadow-lg hover:-translate-y-0.5">
                             Update User
                         </button>
                     </div>
@@ -91,35 +95,35 @@
             </div>
 
             <!-- Reset Password Form -->
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Reset Password</h3>
+            <div class="bg-white rounded-lg shadow-lg p-8 border border-gray-100">
+                <h3 class="text-lg font-bold text-sisc-purple mb-6 border-b border-gray-100 pb-3">Reset Password</h3>
                 <form method="POST" action="{{ route('admin.users.reset-password', $user) }}" class="space-y-6">
                     @csrf
 
                     <!-- New Password -->
                     <div>
-                        <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label for="password" class="block text-sm font-bold text-gray-700 mb-2">
                             New Password <span class="text-red-500">*</span>
                         </label>
                         <input type="password" name="password" id="password" required
-                               class="w-full rounded-lg border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                               class="w-full rounded-lg border-gray-300 focus:border-sisc-purple focus:ring focus:ring-purple-200 transition-shadow">
                         @error('password')
-                            <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                            <p class="mt-1 text-sm text-red-600 font-medium">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <!-- Confirm Password -->
                     <div>
-                        <label for="password_confirmation" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label for="password_confirmation" class="block text-sm font-bold text-gray-700 mb-2">
                             Confirm Password <span class="text-red-500">*</span>
                         </label>
                         <input type="password" name="password_confirmation" id="password_confirmation" required
-                               class="w-full rounded-lg border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                               class="w-full rounded-lg border-gray-300 focus:border-sisc-purple focus:ring focus:ring-purple-200 transition-shadow">
                     </div>
 
                     <!-- Submit Button -->
-                    <div class="flex justify-end pt-4 border-t border-gray-200 dark:border-gray-700">
-                        <button type="submit" class="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors"
+                    <div class="flex justify-end pt-6 border-t border-gray-100">
+                        <button type="submit" class="px-5 py-2.5 bg-sisc-gold hover:bg-amber-500 text-white rounded-lg transition-all font-bold shadow-md hover:shadow-lg hover:-translate-y-0.5"
                                 onclick="return confirm('Are you sure you want to reset this user\'s password?');">
                             Reset Password
                         </button>
@@ -129,3 +133,4 @@
         </div>
     </div>
 </x-app-layout>
+

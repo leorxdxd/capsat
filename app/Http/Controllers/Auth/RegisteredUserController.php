@@ -35,10 +35,15 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        // Secure: Always default to Student role for self-registration
+        $studentRole = \App\Models\Role::where('slug', 'student')->firstOrFail();
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role_id' => $studentRole->id,
+            'email_verified_at' => null, // Require verification
         ]);
 
         event(new Registered($user));

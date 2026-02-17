@@ -12,7 +12,10 @@ class Section extends Model
     protected $fillable = [
         'exam_id',
         'title',
+        'description',
+        'instructions',
         'order',
+        'section_type',
     ];
 
     public function exam()

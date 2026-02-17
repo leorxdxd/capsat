@@ -11,21 +11,34 @@ class NormRange extends Model
 
     protected $fillable = [
         'norm_table_id',
-        'min_age',
-        'max_age',
-        'min_score',
-        'max_score',
+        'age_years',
+        'age_months_start',
+        'age_months_end',
+        'raw_score',
+        'sai',
         'percentile',
+        'stanine',
         'description',
-    ];
-
-    protected $casts = [
-        'min_age' => 'decimal:2',
-        'max_age' => 'decimal:2',
     ];
 
     public function normTable()
     {
         return $this->belongsTo(NormTable::class);
+    }
+
+    /**
+     * Get the RSCODE (age + raw_score code)
+     */
+    public function getRscodeAttribute(): string
+    {
+        return $this->age_years . '+' . $this->raw_score;
+    }
+
+    /**
+     * Get the age bracket label
+     */
+    public function getAgeBracketLabelAttribute(): string
+    {
+        return "AGE {$this->age_years} {$this->age_months_start}-{$this->age_months_end}";
     }
 }
