@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             InitialUsersSeeder::class,
             IntelligenceExamSeeder::class,
+            Grade7ExamsSeeder::class,
             NormDataSeeder::class,
         ]);
     }
